@@ -1,0 +1,50 @@
+<router-outlet></router-outlet>
+
+<p>
+  <mat-toolbar color="primary">
+    <h1>Tabla de Posts</h1>
+  </mat-toolbar>
+</p>
+
+<button mat-raised-button (click)="opennewpost()" color="primary">New Post</button>
+
+<hr>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+      
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef> UserId </th>
+            <td mat-cell *matCellDef="let postsarre"> {{postsarre.userId}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let postsarre"> {{postsarre.id}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let postsarre"> {{postsarre.title}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="body">
+            <th mat-header-cell *matHeaderCellDef> Body </th>
+            <td mat-cell *matCellDef="let postsarre"> {{postsarre.body}} </td>
+          </ng-container>
+
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+              *matRowDef="let row; columns: displayedColumns;"
+              mat-row
+              (click)="openmodal(row.id)"
+          ></tr>
+        </table>      
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                      showFirstLastButtons 
+                      aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+

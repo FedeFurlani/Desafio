@@ -1,0 +1,50 @@
+<form style="text-align: center;" [formGroup]="form" (ngSubmit)="save($event)">
+    <p>
+        <mat-toolbar color="primary">
+          <span>Insert New Post</span>
+          <span class="example-spacer"></span>
+        </mat-toolbar>
+      </p>
+
+<h2>Insert Title: </h2>
+    <p>
+        <input 
+        [class.is-valid]="isTitleValid"
+        [class.is-invalid]="isTitleInvalid"
+        type="text" 
+        formControlName="title">
+    </p>
+
+    <div class="messages" [class.active]="isTitleInvalid">
+        <p>
+            <strong *ngIf="title.touched && title.hasError('required')">Campo Requerido !</strong>
+        </p>
+    </div>
+
+    <h2>Insert Body: </h2>
+    <p>
+    <input 
+        [class.is-valid]="isBodyValid"
+        [class.is-invalid]="isBodyInvalid"
+        type="text" 
+        formControlName="body">
+    </p>
+    
+
+    <div class="messages" [class.active]="isBodyInvalid">
+        <p>
+            <strong *ngIf="body.touched && body.hasError('required')">Campo Requerido !</strong>
+        </p>
+    </div >
+
+    <p>
+        <button type="submit" mat-stroked-button color="primary">Add</button>
+        <!--button type="submit">Send</button-->
+    </p>
+    
+</form>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
+</mat-dialog-actions>
+
