@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Validators, FormGroup , FormBuilder} from '@angular/forms';
 import { NewserviceService } from 'src/app/services/newservice.service';
 import { CreatePosts, Posts } from '../../models/posts.model'; //Model
@@ -15,6 +15,9 @@ export class NewpostComponent implements OnInit {
   form: FormGroup;
   v1: string;
   v2: string;
+  obj: Posts;
+
+  public load: Boolean = false; //Spinner
 
   constructor(
     private FormBuilder: FormBuilder,
@@ -37,15 +40,17 @@ export class NewpostComponent implements OnInit {
     this.title.valueChanges
     .subscribe(value => 
       {
-        console.log(value);
         this.v1= value;
       }),
       this.body.valueChanges
     .subscribe(value2 => 
       {
-        console.log(value2);
         this.v2= value2;
       })
+      this.dialog;
+      setTimeout(() => {
+        this.load = true;
+      }, 500)
   }
 
   get title() {
@@ -56,27 +61,17 @@ export class NewpostComponent implements OnInit {
     return this.form.get('body');
   }
 
-  getTitleValue()
-  {
-    console.log(this.title.value);
-  }
-
-  getBodyValue()
-  {
-    console.log(this.body.value);
-  }
-
   save(event: any)
   {
-    if(this.form.valid){ 
-      console.log(this.form.value);
-      this.agregarpost()
+    if(this.form.valid)
+    { 
+      this.agregarpost();
     } else { 
       this.form.markAllAsTouched();
     }
   }
-  
 
+  
   get isTitleValid()
   {
     return this.title.touched && this.title.valid;
@@ -104,23 +99,19 @@ export class NewpostComponent implements OnInit {
       data: obj });
   }
 
-  closedialog()
-  {
-    this.dialog.closeAll();
-  }
-
   agregarpost()
   {
       const post: CreatePosts =
       {
+        userId: 1,
         title: this.v1,
         body: this.v2,
-        userId: 1
       }
       this.servicioaggpost.create(post)
-      .subscribe(data => {
-      console.log('newpost', data);
-      this.openmodal(data);
+      .subscribe((data: Posts) => {
+      this.obj = data;
+      this.openmodal(data); //Abre modal para mostrar datos del nuevo objeto
     });
   }
+  
 }

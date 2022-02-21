@@ -1,6 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Posts } from '../../models/posts.model'; //Model
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -11,13 +12,17 @@ import { Posts } from '../../models/posts.model'; //Model
 export class CreatedComponent implements OnInit {
 
   data : Posts;
+  public load: Boolean = false; //Spinner
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public recepdata: Posts,
+  @Inject(MAT_DIALOG_DATA) public recepdata: Posts,
   ) {
     this.data= recepdata;
    }
 
   ngOnInit(): void {
+      setTimeout(() => {
+        this.load = true;
+      }, 500)
   }
-
 }

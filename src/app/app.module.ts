@@ -18,7 +18,10 @@ import { FormControl, Validators, FormGroup , FormBuilder} from '@angular/forms'
 import { CreatedComponent } from './components/created/created.component';
 import { MatButtonModule } from '@angular/material/button';
 import  {MatToolbarModule} from '@angular/material/toolbar';
-import { PaginatorComponent } from './components/prueba/paginator/paginator.component';
+import {MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -28,21 +31,23 @@ import { PaginatorComponent } from './components/prueba/paginator/paginator.comp
     CommentsComponent,
     NewpostComponent,
     CreatedComponent,
-    PaginatorComponent,
   ],
   entryComponents: [],
   imports: [
     BrowserModule,
+    MatInputModule,
     MatSliderModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     MatTableModule,
-    MatPaginatorModule, 
+    MatPaginatorModule,
+    MatProgressSpinnerModule, 
     BrowserAnimationsModule,
     MatDialogModule,
     MatButtonModule,
     MatToolbarModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

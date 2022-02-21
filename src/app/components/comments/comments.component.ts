@@ -1,9 +1,8 @@
-import { Component, OnInit , Inject } from '@angular/core';
+import { Component, OnInit , Inject , ViewChild } from '@angular/core';
 import { ComentariosService } from '../../services/comentarios.service';
-
-import {MatDialog} from '@angular/material/dialog';
 import { Comments } from '../../models/posts.model'; //Model
-
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table'; 
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -14,22 +13,31 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class CommentsComponent implements OnInit {
 
   displayedColumns: string[] = ['postId','body'];
+  public load: Boolean = false; //Spinner
 
-  arre: Comments[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  dataSource : MatTableDataSource<Comments>;
 
   constructor(
     private ComentariosService: ComentariosService,
-
-    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public recepdata: Comments,
   ) {   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.load = true;
+    }, 500);
     this.ComentariosService.obtenerComentarios(this.recepdata.id)
     .subscribe(data => {
-      this.arre= data;
-      console.log(data);
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
     });
+  }
+
+  Filtro(filterValue: Event) {
+    const filtro = (filterValue.target as HTMLInputElement).value;
+    this.dataSource.filter = filtro.trim().toLowerCase();
   }
 }
 
