@@ -14,5 +14,5 @@ export class PruebascssComponent implements OnInit {
 
 //nueva rama
 //cambio desde prueba
-
+//nuevocommit
 }
